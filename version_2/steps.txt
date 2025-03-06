@@ -1,0 +1,35 @@
+Get Python3.11 and create a virtual enviornment
+!pip install -r requirements.txt
+
+sudo apt update
+sudo apt install poppler-utils mesa-utils libgl1 tesseract-ocr 
+sudo apt install docker.io 
+
+permission issue over docker - follow below steps: 
+	ls -l /var/run/docker.sock
+	sudo chown root:docker /var/run/docker.sock
+	sudo chmod 660 /var/run/docker.sock
+	sudo usermod -aG docker $USER
+    restart the terminal
+
+### Qdrant Getting: 
+
+docker pull qdrant/qdrant
+docker run -p 6333:6333 -v .:/qdrant/storage qdrant/qdrant
+
+Runs at: localhost/6333:dashboard/
+
+### Ollama Getting: 
+
+sudo apt update
+sudo apt install -y curl
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3.2:1b 
+ollama run llama3.2:1b (exit after a test)
+
+keep running (Two Terminal Tab):
+
+Terminal 01: docker run -p 6333:6333 -v .:/qdrant/storage qdrant/qdrant (Keep Running)
+Terminal 02: streamlit run app.py (serves the UI)
+
+Port used: 8501 (server streamlit), 6333 (Qdrant), 11434 (Ollama)
